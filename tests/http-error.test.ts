@@ -62,7 +62,7 @@ describe('http-error', () => {
   test('createBadRequest', () => {
     expect(createBadRequest({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "BadRequest",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -77,7 +77,7 @@ describe('http-error', () => {
   test('createUnauthorized', () => {
     expect(createUnauthorized({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "Unauthorized",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -92,7 +92,7 @@ describe('http-error', () => {
   test('createPaymentRequired', () => {
     expect(createPaymentRequired({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "PaymentRequired",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -107,7 +107,7 @@ describe('http-error', () => {
   test('createForbidden', () => {
     expect(createForbidden({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "Forbidden",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -122,7 +122,7 @@ describe('http-error', () => {
   test('createNotFound', () => {
     expect(createNotFound({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "NotFound",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -137,7 +137,7 @@ describe('http-error', () => {
   test('createMethodNotAllowed', () => {
     expect(createMethodNotAllowed({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "MethodNotAllowed",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -152,7 +152,7 @@ describe('http-error', () => {
   test('createNotAcceptable', () => {
     expect(createNotAcceptable({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "NotAcceptable",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -172,7 +172,7 @@ describe('http-error', () => {
         otherKey: 'otherValue',
       }),
     ).toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "ProxyAuthenticationRequired",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -187,7 +187,7 @@ describe('http-error', () => {
   test('createRequestTimeout', () => {
     expect(createRequestTimeout({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "RequestTimeout",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -202,7 +202,7 @@ describe('http-error', () => {
   test('createConflict', () => {
     expect(createConflict({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "Conflict",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -217,7 +217,7 @@ describe('http-error', () => {
   test('createGone', () => {
     expect(createGone({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "Gone",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -232,7 +232,7 @@ describe('http-error', () => {
   test('createLengthRequired', () => {
     expect(createLengthRequired({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "LengthRequired",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -247,7 +247,7 @@ describe('http-error', () => {
   test('createPreconditionFailed', () => {
     expect(createPreconditionFailed({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "PreconditionFailed",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -263,7 +263,7 @@ describe('http-error', () => {
     expect(
       createRequestEntityTooLarge({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }),
     ).toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "RequestEntityTooLarge",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -278,7 +278,7 @@ describe('http-error', () => {
   test('createRequestURITooLong', () => {
     expect(createRequestURITooLong({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "RequestURITooLong",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -293,7 +293,7 @@ describe('http-error', () => {
   test('createUnsupportedMediaType', () => {
     expect(createUnsupportedMediaType({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "UnsupportedMediaType",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -308,7 +308,7 @@ describe('http-error', () => {
   test('createRangeNotSatisfiable', () => {
     expect(createRangeNotSatisfiable({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "RangeNotSatisfiable",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -323,7 +323,7 @@ describe('http-error', () => {
   test('createExpectationFailed', () => {
     expect(createExpectationFailed({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "ExpectationFailed",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -338,7 +338,7 @@ describe('http-error', () => {
   test('createImateapot', () => {
     expect(createImateapot({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "Imateapot",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -353,7 +353,7 @@ describe('http-error', () => {
   test('createMisdirectedRequest', () => {
     expect(createMisdirectedRequest({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "MisdirectedRequest",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -368,7 +368,7 @@ describe('http-error', () => {
   test('createUnprocessableEntity', () => {
     expect(createUnprocessableEntity({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "UnprocessableEntity",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -383,7 +383,7 @@ describe('http-error', () => {
   test('createLocked', () => {
     expect(createLocked({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "Locked",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -398,7 +398,7 @@ describe('http-error', () => {
   test('createFailedDependency', () => {
     expect(createFailedDependency({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "FailedDependency",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -413,7 +413,7 @@ describe('http-error', () => {
   test('createTooEarly', () => {
     expect(createTooEarly({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "TooEarly",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -428,7 +428,7 @@ describe('http-error', () => {
   test('createUpgradeRequired', () => {
     expect(createUpgradeRequired({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "UpgradeRequired",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -443,7 +443,7 @@ describe('http-error', () => {
   test('createPreconditionRequired', () => {
     expect(createPreconditionRequired({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "PreconditionRequired",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -458,7 +458,7 @@ describe('http-error', () => {
   test('createTooManyRequests', () => {
     expect(createTooManyRequests({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "TooManyRequests",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -478,7 +478,7 @@ describe('http-error', () => {
         otherKey: 'otherValue',
       }),
     ).toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "RequestHeaderFieldsTooLarge",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -498,7 +498,7 @@ describe('http-error', () => {
         otherKey: 'otherValue',
       }),
     ).toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "UnavailableForLegalReasons",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -513,7 +513,7 @@ describe('http-error', () => {
   test('createInternalServerError', () => {
     expect(createInternalServerError({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "InternalServerError",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -528,7 +528,7 @@ describe('http-error', () => {
   test('createNotImplemented', () => {
     expect(createNotImplemented({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "NotImplemented",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -543,7 +543,7 @@ describe('http-error', () => {
   test('createBadGateway', () => {
     expect(createBadGateway({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "BadGateway",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -558,7 +558,7 @@ describe('http-error', () => {
   test('createServiceUnavailable', () => {
     expect(createServiceUnavailable({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "ServiceUnavailable",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -573,7 +573,7 @@ describe('http-error', () => {
   test('createGatewayTimeout', () => {
     expect(createGatewayTimeout({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "GatewayTimeout",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -589,7 +589,7 @@ describe('http-error', () => {
     expect(
       createHTTPVersionNotSupported({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }),
     ).toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "HTTPVersionNotSupported",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -605,7 +605,7 @@ describe('http-error', () => {
     expect(
       createVariantAlsoNegotiates({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }),
     ).toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "VariantAlsoNegotiates",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -620,7 +620,7 @@ describe('http-error', () => {
   test('createInsufficientStorage', () => {
     expect(createInsufficientStorage({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "InsufficientStorage",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -635,7 +635,7 @@ describe('http-error', () => {
   test('createLoopDetected', () => {
     expect(createLoopDetected({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "LoopDetected",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -650,7 +650,7 @@ describe('http-error', () => {
   test('createNotExtended', () => {
     expect(createNotExtended({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }))
       .toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "NotExtended",
         "detail": "Something went wrong",
         "instance": "server-1",
@@ -670,7 +670,7 @@ describe('http-error', () => {
         otherKey: 'otherValue',
       }),
     ).toMatchInlineSnapshot(`
-      Object {
+      {
         "_httpError": "NetworkAuthenticationRequired",
         "detail": "Something went wrong",
         "instance": "server-1",
