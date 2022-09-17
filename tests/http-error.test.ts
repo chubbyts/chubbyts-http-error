@@ -40,25 +40,29 @@ import {
   createUnsupportedMediaType,
   createUpgradeRequired,
   createVariantAlsoNegotiates,
+  HttpError,
+  isHttpError,
 } from '../src/http-error';
 
 describe('http-error', () => {
-  test('createBadRequest', () => {
-    const badRequest = createBadRequest({
-      detail: 'Something went wrong',
-      instance: 'server-1',
-      otherKey: 'otherValue',
+  describe('isHttpError', () => {
+    [
+      { name: 'http-error', value: new HttpError('type', 900, 'title', '_httpError'), toBe: true },
+      { name: 'error', value: new Error(), toBe: false },
+      { name: 'object', value: {}, toBe: false },
+      { name: 'string', value: 'example', toBe: false },
+      { name: 'undefined', value: undefined, toBe: false },
+      { name: 'null', value: null, toBe: false },
+    ].forEach(({ name, value, toBe }) => {
+      test('type is ' + name, () => {
+        expect(isHttpError(value)).toBe(toBe);
+      });
     });
+  });
 
-    expect(badRequest.type).toMatchInlineSnapshot(`"https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.1"`);
-    expect(badRequest.status).toMatchInlineSnapshot(`400`);
-    expect(badRequest.title).toMatchInlineSnapshot(`"Bad Request"`);
-    expect(badRequest.detail).toMatchInlineSnapshot(`"Something went wrong"`);
-    expect(badRequest.instance).toMatchInlineSnapshot(`"server-1"`);
-    expect(badRequest.otherKey).toMatchInlineSnapshot(`"otherValue"`);
-    expect(badRequest._httpError).toMatchInlineSnapshot(`"BadRequest"`);
-
-    expect({ ...badRequest }).toMatchInlineSnapshot(`
+  test('createBadRequest', () => {
+    expect({ ...createBadRequest({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }) })
+      .toMatchInlineSnapshot(`
       {
         "_httpError": "BadRequest",
         "detail": "Something went wrong",

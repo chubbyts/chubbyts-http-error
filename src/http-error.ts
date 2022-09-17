@@ -15,12 +15,12 @@ export class HttpError extends Error implements Data {
     });
   }
 
-  public get(name: string) {
-    return this[name] ?? undefined;
-  }
-
   [key: string]: unknown;
 }
+
+export const isHttpError = (error: unknown): error is HttpError => {
+  return error instanceof HttpError;
+};
 
 export const createBadRequest = (data: Data): HttpError =>
   new HttpError('https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.1', 400, 'Bad Request', 'BadRequest', data);

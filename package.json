@@ -1,6 +1,6 @@
 {
   "name": "@chubbyts/chubbyts-http-error",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Creates http error which can be catched and converted to error responses.",
   "keywords": [
     "chubbyts",
