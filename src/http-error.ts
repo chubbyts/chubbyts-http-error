@@ -1,332 +1,323 @@
 type Data = { detail?: string; instance?: string; [key: string]: unknown };
 
-export type HttpError = {
-  type: string;
-  status: number;
-  title: string;
-  _httpError: string;
-} & Data;
+export class HttpError extends Error implements Data {
+  constructor(
+    public type: string,
+    public status: number,
+    public title: string,
+    public _httpError: string,
+    data: Data = {},
+  ) {
+    super(title);
 
-export const isHttpError = (error: unknown): error is HttpError => {
-  return typeof error === 'object' && null !== error && typeof (error as HttpError)._httpError === 'string';
-};
+    Object.entries(data).forEach(([key, value]) => {
+      this[key] = value;
+    });
+  }
 
-export const createBadRequest = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.1',
-  status: 400,
-  title: 'Bad Request',
-  ...data,
-  _httpError: 'BadRequest',
-});
+  public get(name: string) {
+    return this[name] ?? undefined;
+  }
 
-export const createUnauthorized = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.2',
-  status: 401,
-  title: 'Unauthorized',
-  ...data,
-  _httpError: 'Unauthorized',
-});
+  [key: string]: unknown;
+}
 
-export const createPaymentRequired = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.3',
-  status: 402,
-  title: 'Payment Required',
-  ...data,
-  _httpError: 'PaymentRequired',
-});
+export const createBadRequest = (data: Data): HttpError =>
+  new HttpError('https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.1', 400, 'Bad Request', 'BadRequest', data);
 
-export const createForbidden = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.4',
-  status: 403,
-  title: 'Forbidden',
-  ...data,
-  _httpError: 'Forbidden',
-});
+export const createUnauthorized = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.2',
+    401,
+    'Unauthorized',
+    'Unauthorized',
+    data,
+  );
 
-export const createNotFound = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.5',
-  status: 404,
-  title: 'Not Found',
-  ...data,
-  _httpError: 'NotFound',
-});
+export const createPaymentRequired = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.3',
+    402,
+    'Payment Required',
+    'PaymentRequired',
+    data,
+  );
 
-export const createMethodNotAllowed = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.6',
-  status: 405,
-  title: 'Method Not Allowed',
-  ...data,
-  _httpError: 'MethodNotAllowed',
-});
+export const createForbidden = (data: Data): HttpError =>
+  new HttpError('https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.4', 403, 'Forbidden', 'Forbidden', data);
 
-export const createNotAcceptable = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.7',
-  status: 406,
-  title: 'Not Acceptable',
-  ...data,
-  _httpError: 'NotAcceptable',
-});
+export const createNotFound = (data: Data): HttpError =>
+  new HttpError('https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.5', 404, 'Not Found', 'NotFound', data);
 
-export const createProxyAuthenticationRequired = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.8',
-  status: 407,
-  title: 'Proxy Authentication Required',
-  ...data,
-  _httpError: 'ProxyAuthenticationRequired',
-});
+export const createMethodNotAllowed = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.6',
+    405,
+    'Method Not Allowed',
+    'MethodNotAllowed',
+    data,
+  );
 
-export const createRequestTimeout = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.9',
-  status: 408,
-  title: 'Request Timeout',
-  ...data,
-  _httpError: 'RequestTimeout',
-});
+export const createNotAcceptable = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.7',
+    406,
+    'Not Acceptable',
+    'NotAcceptable',
+    data,
+  );
 
-export const createConflict = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.10',
-  status: 409,
-  title: 'Conflict',
-  ...data,
-  _httpError: 'Conflict',
-});
+export const createProxyAuthenticationRequired = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.8',
+    407,
+    'Proxy Authentication Required',
+    'ProxyAuthenticationRequired',
+    data,
+  );
 
-export const createGone = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.11',
-  status: 410,
-  title: 'Gone',
-  ...data,
-  _httpError: 'Gone',
-});
+export const createRequestTimeout = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.9',
+    408,
+    'Request Timeout',
+    'RequestTimeout',
+    data,
+  );
 
-export const createLengthRequired = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.12',
-  status: 411,
-  title: 'Length Required',
-  ...data,
-  _httpError: 'LengthRequired',
-});
+export const createConflict = (data: Data): HttpError =>
+  new HttpError('https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.10', 409, 'Conflict', 'Conflict', data);
 
-export const createPreconditionFailed = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.13',
-  status: 412,
-  title: 'Precondition Failed',
-  ...data,
-  _httpError: 'PreconditionFailed',
-});
+export const createGone = (data: Data): HttpError =>
+  new HttpError('https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.11', 410, 'Gone', 'Gone', data);
 
-export const createRequestEntityTooLarge = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.14',
-  status: 413,
-  title: 'Request Entity Too Large',
-  ...data,
-  _httpError: 'RequestEntityTooLarge',
-});
+export const createLengthRequired = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.12',
+    411,
+    'Length Required',
+    'LengthRequired',
+    data,
+  );
 
-export const createRequestURITooLong = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.15',
-  status: 414,
-  title: 'Request-URI Too Long',
-  ...data,
-  _httpError: 'RequestURITooLong',
-});
+export const createPreconditionFailed = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.13',
+    412,
+    'Precondition Failed',
+    'PreconditionFailed',
+    data,
+  );
 
-export const createUnsupportedMediaType = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.16',
-  status: 415,
-  title: 'Unsupported Media Type',
-  ...data,
-  _httpError: 'UnsupportedMediaType',
-});
+export const createRequestEntityTooLarge = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.14',
+    413,
+    'Request Entity Too Large',
+    'RequestEntityTooLarge',
+    data,
+  );
 
-export const createRangeNotSatisfiable = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.17',
-  status: 416,
-  title: 'Range Not Satisfiable',
-  ...data,
-  _httpError: 'RangeNotSatisfiable',
-});
+export const createRequestURITooLong = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.15',
+    414,
+    'Request-URI Too Long',
+    'RequestURITooLong',
+    data,
+  );
 
-export const createExpectationFailed = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.18',
-  status: 417,
-  title: 'Expectation Failed',
-  ...data,
-  _httpError: 'ExpectationFailed',
-});
+export const createUnsupportedMediaType = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.16',
+    415,
+    'Unsupported Media Type',
+    'UnsupportedMediaType',
+    data,
+  );
 
-export const createImateapot = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2324#section-2.3.2',
-  status: 418,
-  title: "I'm a teapot",
-  ...data,
-  _httpError: 'Imateapot',
-});
+export const createRangeNotSatisfiable = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.17',
+    416,
+    'Range Not Satisfiable',
+    'RangeNotSatisfiable',
+    data,
+  );
 
-export const createMisdirectedRequest = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc7540#section-9.1.2',
-  status: 421,
-  title: 'Misdirected Request',
-  ...data,
-  _httpError: 'MisdirectedRequest',
-});
+export const createExpectationFailed = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.18',
+    417,
+    'Expectation Failed',
+    'ExpectationFailed',
+    data,
+  );
 
-export const createUnprocessableEntity = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc4918#section-11.2',
-  status: 422,
-  title: 'Unprocessable Entity',
-  ...data,
-  _httpError: 'UnprocessableEntity',
-});
+export const createImateapot = (data: Data): HttpError =>
+  new HttpError('https://datatracker.ietf.org/doc/html/rfc2324#section-2.3.2', 418, "I'm a teapot", 'Imateapot', data);
 
-export const createLocked = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc4918#section-11.3',
-  status: 423,
-  title: 'Locked',
-  ...data,
-  _httpError: 'Locked',
-});
+export const createMisdirectedRequest = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc7540#section-9.1.2',
+    421,
+    'Misdirected Request',
+    'MisdirectedRequest',
+    data,
+  );
 
-export const createFailedDependency = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc4918#section-11.4',
-  status: 424,
-  title: 'Failed Dependency',
-  ...data,
-  _httpError: 'FailedDependency',
-});
+export const createUnprocessableEntity = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc4918#section-11.2',
+    422,
+    'Unprocessable Entity',
+    'UnprocessableEntity',
+    data,
+  );
 
-export const createTooEarly = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc8470#section-5.2',
-  status: 425,
-  title: 'Too Early',
-  ...data,
-  _httpError: 'TooEarly',
-});
+export const createLocked = (data: Data): HttpError =>
+  new HttpError('https://datatracker.ietf.org/doc/html/rfc4918#section-11.3', 423, 'Locked', 'Locked', data);
 
-export const createUpgradeRequired = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.15',
-  status: 426,
-  title: 'Upgrade Required',
-  ...data,
-  _httpError: 'UpgradeRequired',
-});
+export const createFailedDependency = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc4918#section-11.4',
+    424,
+    'Failed Dependency',
+    'FailedDependency',
+    data,
+  );
 
-export const createPreconditionRequired = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc6585#section-3',
-  status: 428,
-  title: 'Precondition Required',
-  ...data,
-  _httpError: 'PreconditionRequired',
-});
+export const createTooEarly = (data: Data): HttpError =>
+  new HttpError('https://datatracker.ietf.org/doc/html/rfc8470#section-5.2', 425, 'Too Early', 'TooEarly', data);
 
-export const createTooManyRequests = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc6585#section-4',
-  status: 429,
-  title: 'Too Many Requests',
-  ...data,
-  _httpError: 'TooManyRequests',
-});
+export const createUpgradeRequired = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.15',
+    426,
+    'Upgrade Required',
+    'UpgradeRequired',
+    data,
+  );
 
-export const createRequestHeaderFieldsTooLarge = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc6585#section-7.3',
-  status: 431,
-  title: 'Request Header Fields Too Large',
-  ...data,
-  _httpError: 'RequestHeaderFieldsTooLarge',
-});
+export const createPreconditionRequired = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc6585#section-3',
+    428,
+    'Precondition Required',
+    'PreconditionRequired',
+    data,
+  );
 
-export const createUnavailableForLegalReasons = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc7725#section-3',
-  status: 451,
-  title: 'Unavailable For Legal Reasons',
-  ...data,
-  _httpError: 'UnavailableForLegalReasons',
-});
+export const createTooManyRequests = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc6585#section-4',
+    429,
+    'Too Many Requests',
+    'TooManyRequests',
+    data,
+  );
 
-export const createInternalServerError = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.5.1',
-  status: 500,
-  title: 'Internal Server Error',
-  ...data,
-  _httpError: 'InternalServerError',
-});
+export const createRequestHeaderFieldsTooLarge = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc6585#section-7.3',
+    431,
+    'Request Header Fields Too Large',
+    'RequestHeaderFieldsTooLarge',
+    data,
+  );
 
-export const createNotImplemented = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.5.2',
-  status: 501,
-  title: 'Not Implemented',
-  ...data,
-  _httpError: 'NotImplemented',
-});
+export const createUnavailableForLegalReasons = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc7725#section-3',
+    451,
+    'Unavailable For Legal Reasons',
+    'UnavailableForLegalReasons',
+    data,
+  );
 
-export const createBadGateway = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.5.3',
-  status: 502,
-  title: 'Bad Gateway',
-  ...data,
-  _httpError: 'BadGateway',
-});
+export const createInternalServerError = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.5.1',
+    500,
+    'Internal Server Error',
+    'InternalServerError',
+    data,
+  );
 
-export const createServiceUnavailable = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.5.4',
-  status: 503,
-  title: 'Service Unavailable',
-  ...data,
-  _httpError: 'ServiceUnavailable',
-});
+export const createNotImplemented = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.5.2',
+    501,
+    'Not Implemented',
+    'NotImplemented',
+    data,
+  );
 
-export const createGatewayTimeout = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.5.5',
-  status: 504,
-  title: 'Gateway Timeout',
-  ...data,
-  _httpError: 'GatewayTimeout',
-});
+export const createBadGateway = (data: Data): HttpError =>
+  new HttpError('https://datatracker.ietf.org/doc/html/rfc2616#section-10.5.3', 502, 'Bad Gateway', 'BadGateway', data);
 
-export const createHTTPVersionNotSupported = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.5.6',
-  status: 505,
-  title: 'HTTP Version Not Supported',
-  ...data,
-  _httpError: 'HTTPVersionNotSupported',
-});
+export const createServiceUnavailable = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.5.4',
+    503,
+    'Service Unavailable',
+    'ServiceUnavailable',
+    data,
+  );
 
-export const createVariantAlsoNegotiates = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2295#section-8.1',
-  status: 506,
-  title: 'Variant Also Negotiates',
-  ...data,
-  _httpError: 'VariantAlsoNegotiates',
-});
+export const createGatewayTimeout = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.5.5',
+    504,
+    'Gateway Timeout',
+    'GatewayTimeout',
+    data,
+  );
 
-export const createInsufficientStorage = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc4918#section-11.5',
-  status: 507,
-  title: 'Insufficient Storage',
-  ...data,
-  _httpError: 'InsufficientStorage',
-});
+export const createHTTPVersionNotSupported = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2616#section-10.5.6',
+    505,
+    'HTTP Version Not Supported',
+    'HTTPVersionNotSupported',
+    data,
+  );
 
-export const createLoopDetected = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc5842#section-7.2',
-  status: 508,
-  title: 'Loop Detected',
-  ...data,
-  _httpError: 'LoopDetected',
-});
+export const createVariantAlsoNegotiates = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc2295#section-8.1',
+    506,
+    'Variant Also Negotiates',
+    'VariantAlsoNegotiates',
+    data,
+  );
 
-export const createNotExtended = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc2774#section-7',
-  status: 510,
-  title: 'Not Extended',
-  ...data,
-  _httpError: 'NotExtended',
-});
+export const createInsufficientStorage = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc4918#section-11.5',
+    507,
+    'Insufficient Storage',
+    'InsufficientStorage',
+    data,
+  );
 
-export const createNetworkAuthenticationRequired = (data: Data): HttpError => ({
-  type: 'https://datatracker.ietf.org/doc/html/rfc6585#section-6',
-  status: 511,
-  title: 'Network Authentication Required',
-  ...data,
-  _httpError: 'NetworkAuthenticationRequired',
-});
+export const createLoopDetected = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc5842#section-7.2',
+    508,
+    'Loop Detected',
+    'LoopDetected',
+    data,
+  );
+
+export const createNotExtended = (data: Data): HttpError =>
+  new HttpError('https://datatracker.ietf.org/doc/html/rfc2774#section-7', 510, 'Not Extended', 'NotExtended', data);
+
+export const createNetworkAuthenticationRequired = (data: Data): HttpError =>
+  new HttpError(
+    'https://datatracker.ietf.org/doc/html/rfc6585#section-6',
+    511,
+    'Network Authentication Required',
+    'NetworkAuthenticationRequired',
+    data,
+  );
