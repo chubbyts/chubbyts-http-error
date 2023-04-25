@@ -40,6 +40,7 @@ import {
   createUnsupportedMediaType,
   createUpgradeRequired,
   createVariantAlsoNegotiates,
+  mapToHttpError,
   HttpError,
   isHttpError,
 } from '../src/http-error';
@@ -58,6 +59,17 @@ describe('http-error', () => {
         expect(isHttpError(value)).toBe(toBe);
       });
     });
+  });
+
+  test('mapToHttpError', () => {
+    const error = new Error('error');
+
+    try {
+      mapToHttpError(error);
+      throw new Error('Expect fail');
+    } catch (e) {
+      expect(e).toBe(error);
+    }
   });
 
   test('createBadRequest', () => {
