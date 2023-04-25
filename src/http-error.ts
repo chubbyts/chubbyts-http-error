@@ -22,12 +22,6 @@ export const isHttpError = (error: unknown): error is HttpError => {
   return error instanceof HttpError;
 };
 
-export type MapToHttpError = (e: unknown) => HttpError;
-
-export const mapToHttpError: MapToHttpError = (e: unknown) => {
-  throw e;
-};
-
 export const createBadRequest = (data: Data): HttpError =>
   new HttpError('https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.1', 400, 'Bad Request', 'BadRequest', data);
 
@@ -327,3 +321,12 @@ export const createNetworkAuthenticationRequired = (data: Data): HttpError =>
     'NetworkAuthenticationRequired',
     data,
   );
+
+export type MapToHttpError = (e: unknown) => HttpError;
+
+export const mapToHttpError: MapToHttpError = (e: unknown): HttpError => {
+  return createInternalServerError({
+    detail: 'A website error has occurred. Sorry for the temporary inconvenience.',
+    cause: e,
+  });
+};

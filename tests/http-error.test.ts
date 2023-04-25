@@ -61,17 +61,6 @@ describe('http-error', () => {
     });
   });
 
-  test('mapToHttpError', () => {
-    const error = new Error('error');
-
-    try {
-      mapToHttpError(error);
-      throw new Error('Expect fail');
-    } catch (e) {
-      expect(e).toBe(error);
-    }
-  });
-
   test('createBadRequest', () => {
     expect({ ...createBadRequest({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }) })
       .toMatchInlineSnapshot(`
@@ -715,6 +704,19 @@ describe('http-error', () => {
         "status": 511,
         "title": "Network Authentication Required",
         "type": "https://datatracker.ietf.org/doc/html/rfc6585#section-6",
+      }
+    `);
+  });
+
+  test('mapToHttpError', () => {
+    expect({ ...mapToHttpError(new Error('error')) }).toMatchInlineSnapshot(`
+      {
+        "_httpError": "InternalServerError",
+        "cause": [Error: error],
+        "detail": "A website error has occurred. Sorry for the temporary inconvenience.",
+        "status": 500,
+        "title": "Internal Server Error",
+        "type": "https://datatracker.ietf.org/doc/html/rfc2616#section-10.5.1",
       }
     `);
   });
