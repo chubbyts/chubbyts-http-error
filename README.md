@@ -30,7 +30,7 @@ Creates http error which can be catched and converted to error responses.
 Through [NPM](https://www.npmjs.com) as [@chubbyts/chubbyts-http-error][1].
 
 ```ts
-npm i @chubbyts/chubbyts-http-error@^2.2.1
+npm i @chubbyts/chubbyts-http-error@^2.3.0
 ```
 
 ## Usage
