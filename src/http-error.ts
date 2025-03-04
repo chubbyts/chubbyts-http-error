@@ -1,21 +1,30 @@
 type Data = { detail?: string; instance?: string; [key: string]: unknown };
 
 export class HttpError extends Error implements Data {
+  type: string;
+  status: number;
+  title: string;
+  _httpError: string;
+  [key: string]: unknown;
+
   constructor(
-    public type: string,
-    public status: number,
-    public title: string,
-    public _httpError: string,
+    type: string,
+    status: number,
+    title: string,
+    _httpError: string,
     data: Data = {},
   ) {
     super(title);
+
+    this.type = type;
+    this.status = status;
+    this.title = title;
+    this._httpError = _httpError;
 
     Object.entries(data).forEach(([key, value]) => {
       this[key] = value;
     });
   }
-
-  [key: string]: unknown;
 }
 
 export const isHttpError = (error: unknown): error is HttpError => {
