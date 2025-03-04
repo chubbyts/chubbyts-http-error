@@ -7,13 +7,7 @@ export class HttpError extends Error implements Data {
   _httpError: string;
   [key: string]: unknown;
 
-  constructor(
-    type: string,
-    status: number,
-    title: string,
-    _httpError: string,
-    data: Data = {},
-  ) {
+  constructor(type: string, status: number, title: string, _httpError: string, data: Data = {}) {
     super(title);
 
     this.type = type;
