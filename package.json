@@ -1,7 +1,7 @@
 {
   "name": "@chubbyts/chubbyts-http-error",
   "type": "module",
-  "version": "2.4.2",
+  "version": "3.0.0",
   "description": "Creates http error which can be catched and converted to error responses.",
   "keywords": [
     "chubbyts",
@@ -12,11 +12,11 @@
   "license": "MIT",
   "repository": "chubbyts/chubbyts-http-error",
   "scripts": {
-    "build": "node ./build.mjs",
+    "build": "tsc",
     "cs-fix": "prettier --write src tests",
     "cs": "prettier --check src tests",
     "infection": "stryker run",
-    "lint-fix": "eslint src tests eslint.config.mjs vitest.config.ts --fix",
+    "lint-fix": "eslint src tests eslint.config.js vitest.config.ts --fix",
     "lint": "eslint src tests",
     "prepare": "npm run build",
     "test": "vitest"
@@ -33,24 +33,22 @@
   "exports": {
     "./*": {
       "types": "./*.d.ts",
-      "require": "./*.cjs",
-      "import": "./*.mjs",
-      "default": "./*.mjs"
+      "import": "./*.js",
+      "default": "./*.js"
     }
   },
   "engines": {
     "node": ">=18"
   },
   "devDependencies": {
-    "@chubbyts/chubbyts-eslint": "^3.0.4",
-    "@chubbyts/chubbyts-packaging": "^4.0.0",
-    "@stryker-mutator/core": "^8.7.1",
-    "@stryker-mutator/vitest-runner": "^8.7.1",
-    "@types/node": "^22.13.9",
-    "@vitest/coverage-v8": "^3.0.7",
+    "@chubbyts/chubbyts-eslint": "^4.0.2",
+    "@stryker-mutator/core": "^9.0.1",
+    "@stryker-mutator/vitest-runner": "^9.0.1",
+    "@types/node": "^24.0.1",
+    "@vitest/coverage-v8": "^3.2.3",
     "prettier": "^3.5.3",
-    "typescript": "^5.8.2",
-    "vitest": "^3.0.7"
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.3"
   },
   "publishConfig": {
     "access": "public"
