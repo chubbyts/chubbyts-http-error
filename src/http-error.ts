@@ -4,6 +4,8 @@ export class HttpError extends Error implements Data {
   type: string;
   status: number;
   title: string;
+  detail?: string;
+  instance?: string;
   _httpError: string;
   [key: string]: unknown;
 
@@ -15,7 +17,12 @@ export class HttpError extends Error implements Data {
     this.title = title;
     this._httpError = _httpError;
 
-    Object.entries(data).forEach(([key, value]) => {
+    const { detail, instance, ...rest } = data;
+
+    this.detail = detail;
+    this.instance = instance;
+
+    Object.entries(rest).forEach(([key, value]) => {
       this[key] = value;
     });
   }
@@ -325,11 +332,12 @@ export const createNetworkAuthenticationRequired = (data: Data): HttpError =>
     data,
   );
 
-export type MapToHttpError = (e: unknown) => HttpError;
+export type MapToHttpError = (e: unknown, instance?: string) => HttpError;
 
-export const mapToHttpError: MapToHttpError = (e: unknown): HttpError => {
+export const mapToHttpError: MapToHttpError = (e: unknown, instance?: string): HttpError => {
   return createInternalServerError({
     detail: 'A website error has occurred. Sorry for the temporary inconvenience.',
+    instance,
     cause: e,
   });
 };
