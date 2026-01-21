@@ -715,7 +715,6 @@ describe('http-error', () => {
           "_httpError": "InternalServerError",
           "cause": [Error: error],
           "detail": "A website error has occurred. Sorry for the temporary inconvenience.",
-          "instance": undefined,
           "status": 500,
           "title": "Internal Server Error",
           "type": "https://datatracker.ietf.org/doc/html/rfc2616#section-10.5.1",

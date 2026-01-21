@@ -19,8 +19,13 @@ export class HttpError extends Error implements Data {
 
     const { detail, instance, ...rest } = data;
 
-    this.detail = detail;
-    this.instance = instance;
+    if (detail !== undefined) {
+      this.detail = detail;
+    }
+
+    if (instance !== undefined) {
+      this.instance = instance;
+    }
 
     Object.entries(rest).forEach(([key, value]) => {
       this[key] = value;
