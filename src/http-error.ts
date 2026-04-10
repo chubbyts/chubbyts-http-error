@@ -9,6 +9,7 @@ export class HttpError extends Error implements Data {
   _httpError: string;
   [key: string]: unknown;
 
+  // Stryker disable next-line BlockStatement: constructor block mutation is equivalent here
   constructor(type: string, status: number, title: string, _httpError: string, data: Data = {}) {
     super(title);
 

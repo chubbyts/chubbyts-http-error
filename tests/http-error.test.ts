@@ -61,6 +61,22 @@ describe('http-error', () => {
     });
   });
 
+  test('HttpError constructor sets error state and omits undefined optional fields', () => {
+    const error = new HttpError('type', 900, 'title', '_httpError', { otherKey: 'otherValue' });
+
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toBe('title');
+    expect(Object.prototype.hasOwnProperty.call(error, 'detail')).toBe(false);
+    expect(Object.prototype.hasOwnProperty.call(error, 'instance')).toBe(false);
+    expect({ ...error }).toStrictEqual({
+      type: 'type',
+      status: 900,
+      title: 'title',
+      _httpError: '_httpError',
+      otherKey: 'otherValue',
+    });
+  });
+
   test('createBadRequest', () => {
     expect({ ...createBadRequest({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }) })
       .toMatchInlineSnapshot(`
