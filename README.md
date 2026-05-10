@@ -23,14 +23,14 @@ Creates http error which can be catched and converted to error responses.
 
 ## Requirements
 
- * node: 20
+ * node: 22
 
 ## Installation
 
 Through [NPM](https://www.npmjs.com) as [@chubbyts/chubbyts-http-error][1].
 
 ```ts
-npm i @chubbyts/chubbyts-http-error@^3.2.1
+npm i @chubbyts/chubbyts-http-error@^3.3.0
 ```
 
 ## Usage
