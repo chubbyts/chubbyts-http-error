@@ -1,3 +1,5 @@
+/* oxlint-disable functional/immutable-data */
+
 type Data = { detail?: string; instance?: string; [key: string]: unknown };
 
 export class HttpError extends Error implements Data {
@@ -16,6 +18,7 @@ export class HttpError extends Error implements Data {
     this.type = type;
     this.status = status;
     this.title = title;
+    // oxlint-disable-next-line no-underscore-dangle
     this._httpError = _httpError;
 
     const { detail, instance, ...rest } = data;
