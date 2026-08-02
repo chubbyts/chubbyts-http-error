@@ -77,6 +77,55 @@ describe('http-error', () => {
     });
   });
 
+  test('HttpError constructor ignores reserved keys in data', () => {
+    const error = new HttpError('type', 900, 'title', '_httpError', {
+      type: 'evil-type',
+      status: 200,
+      title: 'evil-title',
+      message: 'evil-message',
+      name: 'evil-name',
+      stack: 'evil-stack',
+      _httpError: 'EvilHttpError',
+      constructor: 'evil-constructor',
+      prototype: 'evil-prototype',
+      otherKey: 'otherValue',
+    });
+
+    expect(error.message).toBe('title');
+    expect(error.name).toBe('Error');
+    expect(error.stack).not.toBe('evil-stack');
+    expect(error.constructor).toBe(HttpError);
+    expect(Object.prototype.hasOwnProperty.call(error, 'prototype')).toBe(false);
+    expect({ ...error }).toStrictEqual({
+      type: 'type',
+      status: 900,
+      title: 'title',
+      _httpError: '_httpError',
+      otherKey: 'otherValue',
+    });
+  });
+
+  test('HttpError constructor ignores __proto__ key in data', () => {
+    const error = new HttpError(
+      'type',
+      900,
+      'title',
+      '_httpError',
+      JSON.parse('{"__proto__": {"polluted": true}, "otherKey": "otherValue"}') as { [key: string]: unknown },
+    );
+
+    expect(isHttpError(error)).toBe(true);
+    expect(error.polluted).toBeUndefined();
+    expect(({} as { polluted?: boolean }).polluted).toBeUndefined();
+    expect({ ...error }).toStrictEqual({
+      type: 'type',
+      status: 900,
+      title: 'title',
+      _httpError: '_httpError',
+      otherKey: 'otherValue',
+    });
+  });
+
   test('createBadRequest', () => {
     expect({ ...createBadRequest({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' }) })
       .toMatchInlineSnapshot(`

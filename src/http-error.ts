@@ -2,6 +2,19 @@
 
 type Data = { detail?: string; instance?: string; [key: string]: unknown };
 
+const reservedKeys = new Set([
+  '__proto__',
+  'constructor',
+  'prototype',
+  'type',
+  'status',
+  'title',
+  'message',
+  'name',
+  'stack',
+  '_httpError',
+]);
+
 export class HttpError extends Error implements Data {
   type: string;
   status: number;
@@ -32,7 +45,9 @@ export class HttpError extends Error implements Data {
     }
 
     Object.entries(rest).forEach(([key, value]) => {
-      this[key] = value;
+      if (!reservedKeys.has(key)) {
+        this[key] = value;
+      }
     });
   }
 }
