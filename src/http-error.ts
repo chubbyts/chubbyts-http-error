@@ -1,6 +1,16 @@
 /* oxlint-disable functional/immutable-data */
 
-type Data = { detail?: string; instance?: string; [key: string]: unknown };
+/**
+ * `detail` and `instance` are problem details (rfc 9457), `headers` are the headers the error middleware should set on
+ * the error response (e.g. `retry-after`, `www-authenticate`, `allow`) and get never serialized into the body, all other
+ * keys are additional problem details.
+ */
+type Data = {
+  detail?: string;
+  instance?: string;
+  headers?: Record<string, string>;
+  [key: string]: unknown;
+};
 
 const reservedKeys = new Set([
   '__proto__',
@@ -21,6 +31,7 @@ export class HttpError extends Error implements Data {
   title: string;
   detail?: string;
   instance?: string;
+  headers?: Record<string, string>;
   _httpError: string;
   [key: string]: unknown;
 
@@ -34,7 +45,7 @@ export class HttpError extends Error implements Data {
     // oxlint-disable-next-line no-underscore-dangle
     this._httpError = _httpError;
 
-    const { detail, instance, ...rest } = data;
+    const { detail, instance, headers, ...rest } = data;
 
     if (detail !== undefined) {
       this.detail = detail;
@@ -44,8 +55,12 @@ export class HttpError extends Error implements Data {
       this.instance = instance;
     }
 
+    if (headers !== undefined) {
+      this.headers = headers;
+    }
+
     Object.entries(rest).forEach(([key, value]) => {
-      if (!reservedKeys.has(key)) {
+      if (value !== undefined && !reservedKeys.has(key)) {
         this[key] = value;
       }
     });

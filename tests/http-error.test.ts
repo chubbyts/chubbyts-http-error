@@ -77,6 +77,25 @@ describe('http-error', () => {
     });
   });
 
+  test('HttpError constructor sets headers and skips undefined additional data', () => {
+    const error = new HttpError('type', 900, 'title', '_httpError', {
+      headers: { 'retry-after': '1' },
+      definedKey: 'value',
+      undefinedKey: undefined,
+    });
+
+    expect(error.headers).toStrictEqual({ 'retry-after': '1' });
+    expect(Object.prototype.hasOwnProperty.call(error, 'undefinedKey')).toBe(false);
+    expect({ ...error }).toStrictEqual({
+      type: 'type',
+      status: 900,
+      title: 'title',
+      _httpError: '_httpError',
+      headers: { 'retry-after': '1' },
+      definedKey: 'value',
+    });
+  });
+
   test('HttpError constructor ignores reserved keys in data', () => {
     const error = new HttpError('type', 900, 'title', '_httpError', {
       type: 'evil-type',

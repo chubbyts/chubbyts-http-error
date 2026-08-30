@@ -30,7 +30,7 @@ Creates http error which can be catched and converted to error responses.
 Through [NPM](https://www.npmjs.com) as [@chubbyts/chubbyts-http-error][1].
 
 ```ts
-npm i @chubbyts/chubbyts-http-error@^3.4.1
+npm i @chubbyts/chubbyts-http-error@^3.5.0
 ```
 
 ## Usage
@@ -45,6 +45,37 @@ try {
 }
 ```
 
+### Data
+
+ * `detail`, `instance`: problem details ([RFC 9457][7])
+ * `headers`: the headers the error middleware should set on the error response (e.g. `www-authenticate`, `allow`,
+   `retry-after`), never part of the body
+ * any other key: additional problem details, keys with an `undefined` value get skipped, reserved keys (`type`,
+   `status`, `title`, ...) get ignored
+
+### Error middleware
+
+```ts
+import { isHttpError } from '@chubbyts/chubbyts-http-error/dist/http-error';
+
+const errorMiddleware: Middleware = async (request, handler) => {
+  try {
+    return await handler(request);
+  } catch (e) {
+    if (isHttpError(e)) {
+      const { headers, _httpError, ...body } = e;
+
+      return new Response(JSON.stringify(body), {
+        status: e.status,
+        headers: { 'content-type': 'application/problem+json', ...headers },
+      });
+    }
+
+    throw e;
+  }
+};
+```
+
 ## Copyright
 
 2026 Dominik Zogg
@@ -55,3 +86,4 @@ try {
 [4]: https://www.npmjs.com/package/@chubbyts/chubbyts-dic-types
 [5]: https://www.npmjs.com/package/@chubbyts/chubbyts-http-types
 [6]: https://www.npmjs.com/package/@chubbyts/chubbyts-log-types
+[7]: https://datatracker.ietf.org/doc/html/rfc9457
