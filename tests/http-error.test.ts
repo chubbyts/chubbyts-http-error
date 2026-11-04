@@ -43,7 +43,7 @@ import {
   mapToHttpError,
   HttpError,
   isHttpError,
-} from '../src/http-error';
+} from '../src/http-error.js';
 
 describe('http-error', () => {
   describe('isHttpError', () => {
