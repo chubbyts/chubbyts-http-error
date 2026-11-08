@@ -30,13 +30,13 @@ Creates http error which can be catched and converted to error responses.
 Through [NPM](https://www.npmjs.com) as [@chubbyts/chubbyts-http-error][1].
 
 ```ts
-npm i @chubbyts/chubbyts-http-error@^3.5.1
+npm i @chubbyts/chubbyts-http-error@^3.6.0
 ```
 
 ## Usage
 
 ```ts
-import { createNotFound } from '@chubbyts/chubbyts-http-error/dist/http-error';
+import { createNotFound } from '@chubbyts/chubbyts-http-error/http-error';
 
 try {
   throw createNotFound({ detail: 'Something went wrong', instance: 'server-1', otherKey: 'otherValue' });
@@ -56,7 +56,7 @@ try {
 ### Error middleware
 
 ```ts
-import { isHttpError } from '@chubbyts/chubbyts-http-error/dist/http-error';
+import { isHttpError } from '@chubbyts/chubbyts-http-error/http-error';
 
 const errorMiddleware: Middleware = async (request, handler) => {
   try {
