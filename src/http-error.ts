@@ -29,9 +29,10 @@ export class HttpError extends Error implements Data {
   type: string;
   status: number;
   title: string;
-  detail?: string;
-  instance?: string;
-  headers?: Record<string, string>;
+  // `declare`: only set when given, an emitted class field would add them as own properties with `undefined`
+  declare detail?: string;
+  declare instance?: string;
+  declare headers?: Record<string, string>;
   _httpError: string;
   [key: string]: unknown;
 
